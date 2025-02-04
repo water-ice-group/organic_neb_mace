@@ -1,0 +1,3 @@
+#!/bin/bash
+
+for i in {0..177}; do cat config-${i}/mp2.xyz >> ts-guesses-mp2.xyz; done

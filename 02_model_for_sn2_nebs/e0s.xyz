@@ -1,0 +1,21 @@
+1
+Properties=species:S:1:pos:R:3 mp2_energy=-13.600517821508213 config_type=IsolatedAtom free_energy=-13.600517821508213 pbc="F F F"
+H        0.00000000       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 mp2_energy=-1027.0944977126558 config_type=IsolatedAtom free_energy=-1027.0944977126558 pbc="F F F"
+C        0.00000000       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 mp2_energy=-1482.3418207392756 config_type=IsolatedAtom free_energy=-1482.3418207392756 pbc="F F F"
+N        0.00000000       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 mp2_energy=-2038.6266391088182 config_type=IsolatedAtom free_energy=-2038.6266391088182 pbc="F F F"
+O        0.00000000       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 mp2_energy=-2710.614457364674 config_type=IsolatedAtom free_energy=-2710.614457364674 pbc="F F F"
+F        0.00000000       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 mp2_energy=-12509.081471993437 config_type=IsolatedAtom free_energy=-12509.081471993437 pbc="F F F"
+Cl       0.00000000       0.00000000       0.00000000
+1
+Properties=species:S:1:pos:R:3 mp2_energy=-70007.06718971694 config_type=IsolatedAtom free_energy=-70007.06718971694 pbc="F F F"
+Br       0.00000000       0.00000000       0.00000000

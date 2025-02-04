@@ -1,0 +1,27 @@
+#!/bin/bash
+#SBATCH -A MICHAELIDES-SL3-GPU
+##SBATCH -A CSANYI-SL2-GPU
+#SBATCH --partition=ampere
+
+#SBATCH --job-name=mace
+#SBATCH --time=1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --gres=gpu:1
+#SBATCH --qos INTR
+
+source /home/dk584/.bashrc
+module purge
+
+# Load libraries
+module load cuda/12.1
+
+# Python
+module load miniconda/3
+conda init
+conda activate mace
+export PYTHONPATH="mace"
+
+# Run command
+
+python nebs-par.py

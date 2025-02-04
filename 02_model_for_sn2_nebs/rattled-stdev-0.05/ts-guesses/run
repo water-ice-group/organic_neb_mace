@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#SBATCH -A MICHAELIDES-SL2-CPU
+#SBATCH --partition=icelake
+
+#SBATCH --job-name=mace
+#SBATCH --time=0:20:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --array=0-177
+##SBATCH --qos INTR
+source /home/dk584/.bashrc
+module purge
+
+# Load libraries
+module load python/3.8
+# Python
+module load miniconda/3
+conda init
+conda activate mace
+export PYTHONPATH="/home/dk584/mace"
+
+let id=0+${SLURM_ARRAY_TASK_ID}
+
+mkdir config-$id
+cp orca_eval.py config-$id
+cd config-$id
+
+python3 orca_eval.py \
+    --input=../ts-guesses.xyz \
+    --id=$id \
