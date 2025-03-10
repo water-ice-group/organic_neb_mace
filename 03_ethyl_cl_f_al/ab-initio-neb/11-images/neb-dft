@@ -1,0 +1,34 @@
+#!/bin/bash
+#SBATCH -A MICHAELIDES-SL3-CPU
+#SBATCH --partition=icelake
+
+#SBATCH --job-name=neb-dft
+#SBATCH --time=1:00:00
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=11
+#SBATCH --qos=INTR
+
+source /home/dk584/.bashrc
+module purge
+
+# Load libraries
+module load cuda/12.1
+module load python/3.8
+python --version
+# Python
+module load miniconda/3
+conda init
+conda activate mace
+export PYTHONPATH="/home/dk584/mace"
+
+# Run command
+python3 neb-dft.py \
+    --output='neb-mp2.xyz' \
+    --nimages=11 \
+    --k=0.1 \
+    --fmax=0.05 \
+    --nsteps=500 \
+    --a='r.xyz' \
+    --b='p.xyz' \
+    --idpp=True \
+

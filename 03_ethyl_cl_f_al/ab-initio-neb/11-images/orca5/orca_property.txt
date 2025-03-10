@@ -1,0 +1,213 @@
+-------------------------------------------------------------
+----------------------- !PROPERTIES! ------------------------
+-------------------------------------------------------------
+# -----------------------------------------------------------
+$ SCF_Energy
+   description: The SCF energy
+   geom. index: 1
+   prop. index: 1
+        SCF Energy:     -637.6414516420
+# -----------------------------------------------------------
+$ Mayer_Pop
+   description: The Mayer population analysis
+   geom. index: 1
+   prop. index: 1
+     Number of atoms                     : 9
+     Threshold for printing              : 0.1000000
+     Number of bond orders printed       : 8
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0   0     6.0276     6.0000    -0.0276     3.3999     3.3999     0.0000
+  1   0     6.6131     6.0000    -0.6131     3.7020     3.7020    -0.0000
+  2   0     0.7820     1.0000     0.2180     0.9080     0.9080     0.0000
+  3   0     9.6425     9.0000    -0.6425     0.5377     0.5377     0.0000
+  4   0    17.8800    17.0000    -0.8800     0.1436     0.1436     0.0000
+  5   0     0.7328     1.0000     0.2672     0.8934     0.8934     0.0000
+  6   0     0.7416     1.0000     0.2584     0.8976     0.8976     0.0000
+  7   0     0.7777     1.0000     0.2223     0.9191     0.9191     0.0000
+  8   0     0.8027     1.0000     0.1973     0.9177     0.9177    -0.0000
+      Bond orders larger than 0.1000000
+           Atom A     A.N. of A          Atom B    A.N. of B              Bond order
+                0             6               1            6                0.929071
+                0             6               3            9                0.494661
+                0             6               4           17                0.176570
+                0             6               5            1                0.925974
+                0             6               6            1                0.927459
+                1             6               2            1                0.943020
+                1             6               7            1                0.926749
+                1             6               8            1                0.955377
+# -----------------------------------------------------------
+$ Mayer_Pop
+   description: The Mayer population analysis
+   geom. index: 1
+   prop. index: 2
+     Number of atoms                     : 9
+     Threshold for printing              : 0.1000000
+     Number of bond orders printed       : 8
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0   0     6.0515     6.0000    -0.0515     3.5165     3.2436     0.2729
+  1   0     6.6210     6.0000    -0.6210     3.8184     3.5464     0.2720
+  2   0     0.7798     1.0000     0.2202     0.9096     0.8722     0.0374
+  3   0     9.6264     9.0000    -0.6264     0.8501     0.4996     0.3505
+  4   0    17.8737    17.0000    -0.8737     0.5371     0.1348     0.4023
+  5   0     0.7310     1.0000     0.2690     0.8941     0.8609     0.0332
+  6   0     0.7398     1.0000     0.2602     0.8984     0.8648     0.0336
+  7   0     0.7767     1.0000     0.2233     0.9219     0.8820     0.0399
+  8   0     0.8001     1.0000     0.1999     0.9194     0.8819     0.0375
+      Bond orders larger than 0.1000000
+           Atom A     A.N. of A          Atom B    A.N. of B              Bond order
+                0             6               1            6                0.880770
+                0             6               3            9                0.460009
+                0             6               4           17                0.168301
+                0             6               5            1                0.893760
+                0             6               6            1                0.895015
+                1             6               2            1                0.907571
+                1             6               7            1                0.891058
+                1             6               8            1                0.919641
+# -----------------------------------------------------------
+$ Mayer_Pop
+   description: The Mayer population analysis
+   geom. index: 1
+   prop. index: 3
+     Number of atoms                     : 9
+     Threshold for printing              : 0.1000000
+     Number of bond orders printed       : 8
+  NA   - Mulliken gross atomic population
+  ZA   - Total nuclear charge
+  QA   - Mulliken gross atomic charge
+  VA   - Mayer's total valence
+  BVA  - Mayer's bonded valence
+  FA   - Mayer's free valence
+  ATOM       NA         ZA         QA         VA         BVA        FA
+  0   0     6.1299     6.0000    -0.1299     3.6728     3.4176     0.2552
+  1   0     6.6540     6.0000    -0.6540     3.8262     3.5574     0.2688
+  2   0     0.7753     1.0000     0.2247     0.9103     0.8738     0.0365
+  3   0     9.5242     9.0000    -0.5242     0.9934     0.6569     0.3365
+  4   0    17.8439    17.0000    -0.8439     0.5866     0.1894     0.3972
+  5   0     0.7429     1.0000     0.2571     0.9025     0.8699     0.0326
+  6   0     0.7508     1.0000     0.2492     0.9063     0.8733     0.0330
+  7   0     0.7859     1.0000     0.2141     0.9324     0.8941     0.0383
+  8   0     0.7930     1.0000     0.2070     0.9175     0.8807     0.0368
+      Bond orders larger than 0.1000000
+           Atom A     A.N. of A          Atom B    A.N. of B              Bond order
+                0             6               1            6                0.906128
+                0             6               3            9                0.580843
+                0             6               4           17                0.189030
+                0             6               5            1                0.896303
+                0             6               6            1                0.896868
+                1             6               2            1                0.902140
+                1             6               7            1                0.883569
+                1             6               8            1                0.915349
+# -----------------------------------------------------------
+$ MP2_Energies
+   description: The MP2 energies
+   geom. index: 1
+   prop. index: 1
+        Reference Energy:       -637.6414516420
+        Correlation Energy:       -0.7331605254
+        Total MP2 Energy:       -638.3746121674
+# -----------------------------------------------------------
+$ SCF_Electric_Properties
+   description: The SCF Calculated Electric Properties
+   geom. index: 1
+   prop. index: 1
+       Filename                          : orca.scfp 
+       Do Dipole Moment Calculation      : true 
+       Do Quadrupole Moment Calculation  : false 
+       Do Polarizability Calculation     : false 
+** Dipole moment part of electric properties **
+        Magnitude of dipole moment (Debye) :        3.5117821903
+        Electronic Contribution:
+                  0    
+      0      -2.871959
+      1      -2.789763
+      2      -0.387859
+        Nuclear Contribution:
+                  0    
+      0       3.279966
+      1       4.088823
+      2       0.622012
+        Total Dipole moment:
+                  0    
+      0       0.408007
+      1       1.299061
+      2       0.234153
+# -----------------------------------------------------------
+$ MP2_Electric_Properties
+   description: The MP2 Calculated Electric Properties
+   geom. index: 1
+   prop. index: 1
+       Filename                          : orca.pmp2ur 
+       Do Dipole Moment Calculation      : true 
+       Do Quadrupole Moment Calculation  : false 
+       Do Polarizability Calculation     : false 
+** Dipole moment part of electric properties **
+        Magnitude of dipole moment (Debye) :        3.5512634406
+        Electronic Contribution:
+                  0    
+      0      -2.890004
+      1      -2.768199
+      2      -0.385582
+        Nuclear Contribution:
+                  0    
+      0       3.279966
+      1       4.088823
+      2       0.622012
+        Total Dipole moment:
+                  0    
+      0       0.389962
+      1       1.320624
+      2       0.236431
+# -----------------------------------------------------------
+$ MP2_Electric_Properties
+   description: The MP2 Calculated Electric Properties
+   geom. index: 1
+   prop. index: 2
+       Filename                          : orca.pmp2re 
+       Do Dipole Moment Calculation      : true 
+       Do Quadrupole Moment Calculation  : false 
+       Do Polarizability Calculation     : false 
+** Dipole moment part of electric properties **
+        Magnitude of dipole moment (Debye) :        3.6988803845
+        Electronic Contribution:
+                  0    
+      0      -2.992759
+      1      -2.682933
+      2      -0.379819
+        Nuclear Contribution:
+                  0    
+      0       3.279966
+      1       4.088823
+      2       0.622012
+        Total Dipole moment:
+                  0    
+      0       0.287207
+      1       1.405890
+      2       0.242193
+# -------------------------------------------------------------
+----------------------- !GEOMETRIES! ------------------------
+# -------------------------------------------------------------
+------------------------ !GEOMETRY! -------------------------
+    Number of atoms:    9 
+    Geometry Index:     1 
+    Coordinates:
+               0 C      0.180573097979   -0.332628503870    0.019968450772
+               1 C      1.641641598189    0.022116256570    0.026206202365
+               2 H      2.269368750814   -0.573078636500    0.690424207930
+               3 F     -0.492597353401    1.199942068343    0.239929776932
+               4 Cl     0.706800502189   -2.719059085260   -0.382694160266
+               5 H     -0.331750405774   -0.477804539932   -0.906028075557
+               6 H     -0.256443006918   -0.746774205339    0.905839893875
+               7 H      1.579557469609    1.048437044743    0.371738874282
+               8 H      2.088740857314   -0.011884808755   -0.967972720334
