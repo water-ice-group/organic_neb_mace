@@ -1,0 +1,310 @@
+CHARGE
+#Keyw Weight Atom (a5,1x,f6.2,1x,i4)
+H2S1_opt       0.02    1  -0.092
+H2S1_opt       0.02    2   0.046
+C2H2S2_iso_opt 0.02    1  -0.031
+C2H2S2_iso_opt 0.02    3  -0.205
+C2H2S2_iso_opt 0.02    4   0.237
+ENDCHARGE
+GEOMETRY
+S2_opt   0.02   1   2  1.927
+HSSH_opt   0.02   1   2  2.10
+HSSH_opt   0.02   1   4  1.35
+HSSH_opt   0.02   2   3  1.35
+HSSH_opt   2.50   1  2  3  98.9
+H2S     0.02     1  2  1.35
+H2S     0.02     2  3  1.35
+H2S     2.50     1  2  3   92.3
+MoH4   0.01   1  2   1.7
+MoH4   0.01   1  3   1.7
+MoH4   0.01   1  4   1.7
+MoH4   0.01   1  5   1.7
+MoH4   2.50   4  1  5  109.5
+MoH4   2.50   2  1  3  109.5
+H3CSH_opt  0.02   1   2           1.830
+H3CSH_opt  0.02   2   4           1.345
+H3CSH_opt  2.00   2   1   3     112.800
+H3CSH_opt  0.50   1   2   4      97.700
+HSSH_opt   0.20   1   2           2.150
+HSSH_opt   0.02   1   4           1.330
+H3CSCH3_opt   0.02   2   3           1.820
+H3CSCH3_opt   1.00   2   3   4      99.660
+H2S_opt    0.02   1   2           1.347
+H2S_opt    2.00   2   1   3      92.780
+H2CS_opt    0.02   1   2          1.618
+H2CS_opt    2.00   2   1   3     122.260
+C=S_opt     2.00   1   2          1.618
+C6H6S_B3_13 0.50   4 13         3.13
+C6H6S_B2_78 0.50   4 13         2.78
+C6H6S_B2_43 0.50   4 13         2.43
+C6H6S_B2_08 0.50   4 13         2.08
+C6H6S_B1_73 0.50   4 13         1.73
+C6H6S_B1_38 0.50   4 13         1.38
+HSSSSH_opt  5.50   1 3 4 5     83.36
+#Keyw Weight At1 At2 At3 At4 #Lit (a5,1x,f6.2,1x,4i4,f10.4)
+ENDGEOMETRY
+CELL PARAMETERS
+#Keyw Weight Atom (a5,1x,f6.2,1x,i4)
+ENDCELL PARAMETERS
+ENERGY  
+#Weigh op1 Key1  n1  op2 Key2  n2  op3 Key3  n3  op4 Key4  n4  op5 Key5  n5  #Lit (f6.2,5(1x,a1,3x,a5,1x,i3),f10.4)  
+# Restraint NEB O/S exchange
+ 5.10   + NEB_1/1   -  NEB_16/1                -53.50
+ 0.50   + NEB_1/1   -  NEB_17/1                -61.50
+ 5.10   + NEB_1/1   -  NEB_18/1                -41.50
+ 0.50   + NEB_1/1   -  NEB_25/1                -0.22
+# General bond_strength
+ 1.00   + S2_opt/1   -  2S/1               -105.8
+ 1.00   + HSSH_opt/1   -  2HS/1            -55.49
+ 1.00   + H2S/1   -  2HS/2            -92.7
+# Restraint S-S_bond dissociation in HS-SH
+10.0  +   HSSH_opt /1   -  HSSHb1_70   /1         -51.17
+ 7.5  +   HSSH_opt /1   -  HSSHb1_80   /1         -24.43
+ 5.0  +   HSSH_opt /1   -  HSSHb1_90   /1          -9.54
+ 5.0  +   HSSH_opt /1   -  HSSHb2_00   /1          -2.32
+ 1.0  +   HSSH_opt /1   -  HSSHb2_05   /1          -0.68
+ 1.0  +   HSSH_opt /1   -  HSSHb2_10   /1          -0.03
+ 1.0  +   HSSH_opt /1   -  HSSHb2_20   /1          -1.01
+ 2.0  +   HSSH_opt /1   -  HSSHb2_30   /1          -4.09
+ 5.0  +   HSSH_opt /1   -  HSSHb2_40   /1         -8.60
+ 5.0  +   HSSH_opt /1   -  HSSHb2_50   /1         -13.89
+ 5.0  +   HSSH_opt /1   -  HSSHb2_60   /1         -19.64
+ 5.5  +   HSSH_opt /1   -  HSSHb2_70   /1         -25.50
+ 5.5  +   HSSH_opt /1   -  HSSHb2_80   /1         -31.32
+ 5.5  +   HSSH_opt /1   -  HSSHb3_10   /1         -44.05
+ 5.5  +   HSSH_opt /1   -  HSSHb3_40   /1         -50.38
+ 5.5  +   HSSH_opt /1   -  HSSHb3_80   /1         -54.35
+ 2.0  +   HSSH_opt /1   -  HSSHb4_20   /1         -54.99
+### Restraint S-S_bond dissociation in S-S
+ 5.0  +   S2_opt /1   -  S2_1_70 /1                -24.45
+ 2.5  +   S2_opt /1   -  S2_1_75 /1                -13.55
+ 2.0  +   S2_opt /1   -  S2_1_80 /1                -6.37
+ 1.0  +   S2_opt /1   -  S2_1_85 /1                -2.11
+ 1.0  +   S2_opt /1   -  S2_1_90 /1                -0.22
+ 1.0  +   S2_opt /1   -  S2_1_95 /1                -0.18
+ 1.0  +   S2_opt /1   -  S2_2_00 /1                -1.56
+ 2.0  +   S2_opt /1   -  S2_2_05 /1                -4.02
+ 7.0  +   S2_opt /1   -  S2_2_10 /1                -7.33
+ 7.5  +   S2_opt /1   -  S2_2_20 /1                -15.73
+ 7.5  +   S2_opt /1   -  S2_2_30 /1                -25.51
+ 7.5  +   S2_opt /1   -  S2_2_50 /1                -46.20
+ 5.0  +   S2_opt /1   -  S2_2_70 /1                -66.2
+ 5.0  +   S2_opt /1   -  S2_2_90 /1                -82.76
+ 5.0  +   S2_opt /1   -  S2_3_20 /1                -87.96
+# 1.0  +   S2_opt /1   -  S2_3_50 /1                -93.61
+# 1.0  +   S2_opt /1   -  S2_4_00 /1                -101.22
+### Restraint H-S_bond dissociation in H2S
+10.0  +   H2S /1   -  H2S_1_00 /1                -70.56
+ 5.0  +   H2S /1   -  H2S_1_10 /1                -29.12
+ 2.5  +   H2S /1   -  H2S_1_20 /1                -8.53
+ 1.0  +   H2S /1   -  H2S_1_30 /1                -0.77
+ 1.0  +   H2S /1   -  H2S_1_40 /1                -0.74
+ 1.0  +   H2S /1   -  H2S_1_50 /1                -5.54
+ 2.5  +   H2S /1   -  H2S_1_60 /1                -12.60
+ 2.5  +   H2S /1   -  H2S_1_70 /1                -21.22
+ 5.0  +   H2S /1   -  H2S_1_90 /1                -39.73
+ 5.0  +   H2S /1   -  H2S_2_10 /1                -57.42
+ 5.0  +   H2S /1   -  H2S_2_20 /1                -65.52
+ 5.0  +   H2S /1   -  H2S_2_40 /1                -79.91
+ 5.0  +   H2S /1   -  H2S_2_50 /1                -86.30
+ 5.0  +   H2S /1   -  H2S_2_60 /1                -92.13
+ 2.5  +   H2S /1   -  H2S_2_70 /1                -92.42
+ 1.0  +   H2S /1   -  H2S_3_00 /1                -92.43
+ 1.0  +   H2S /1   -  H2S_3_50 /1                -92.56
+### Restraint H-S-H angle dissociation in H2S
+ 5.0  +   H2S /1   -  H2S_65 /1                -12.88
+ 2.5  +   H2S /1   -  H2S_70 /1                -8.65
+ 1.0  +   H2S /1   -  H2S_75 /1                -5.22
+ 1.0  +   H2S /1   -  H2S_80 /1                -2.66
+ 1.0  +   H2S /1   -  H2S_85 /1                -0.95
+ 1.0  +   H2S /1   -  H2S_90 /1                -0.11
+ 1.0  +   H2S /1   -  H2S_95 /1                -0.10
+ 1.0  +   H2S /1   -  H2S_100 /1                -0.92
+ 1.0  +   H2S /1   -  H2S_105 /1                -2.55
+ 2.5  +   H2S /1   -  H2S_110 /1                -4.95
+ 2.5  +   H2S /1   -  H2S_115 /1                -8.08
+ 5.0  +   H2S /1   -  H2S_120 /1                -11.91
+ 5.0  +   H2S /1   -  H2S_125 /1                -16.38
+ 5.0  +   H2S /1   -  H2S_130 /1                -21.43
+ 5.0  +   H2S /1   -  H2S_135 /1                -26.98
+ 5.0  +   H2S /1   -  H2S_140 /1                -32.94
+# Restraint C=S_bond dissociation in H2C=S
+25.0  +   H2CS_opt /1   -  H2CSb1_22   /1                                      -165.90
+ 5.0  +   H2CS_opt /1   -  H2CSb1_42   /1                                       -27.70
+ 0.5  +   H2CS_opt /1   -  H2CSb1_52   /1                                        -5.70
+ 0.5  +   H2CS_opt /1   -  H2CSb1_62   /1                                        -0.01
+ 0.5  +   H2CS_opt /1   -  H2CSb1_72   /1                                        -4.00
+ 2.5  +   H2CS_opt /1   -  H2CSb1_82   /1                                       -13.90
+ 5.0  +   H2CS_opt /1   -  H2CSb1_92   /1                                       -26.70
+ 7.5  +   H2CS_opt /1   -  H2CSb2_12   /1                                       -55.70
+10.5  +   H2CS_opt /1   -  H2CSb2_32   /1                                       -84.00
+25.0  +   H2CS_opt /1   -  H2CSb2_52   /1                                      -108.00
+25.0  +   H2CS_opt /1   -  H2CSb2_82   /1                                      -138.00
+25.0  +   H2CS_opt /1   -  H2CSb3_12   /1                                      -157.00
+25.0  +   H2CS_opt /1   -  H2CSb3_52   /1                                      -169.00
+ 0.5  +   H2CS_opt /1   -  H2CSb4_02   /1                                      -141.70
+# Restraint C-S_bond dissociation in H3C-SH
+10.0  +   H3CSH_opt /1   -  H3CSHb1_44   /1                                      -65.80
+ 2.5  +   H3CSH_opt /1   -  H3CSHb1_64   /1                                      -11.30
+ 0.5  +   H3CSH_opt /1   -  H3CSHb1_74   /1                                       -2.30
+ 0.5  +   H3CSH_opt /1   -  H3CSHb1_84   /1                                       -0.01
+ 0.5  +   H3CSH_opt /1   -  H3CSHb1_94   /1                                       -1.70
+ 2.5  +   H3CSH_opt /1   -  H3CSHb2_04   /1                                       -5.90
+ 2.5  +   H3CSH_opt /1   -  H3CSHb2_14   /1                                      -11.40
+ 2.5  +   H3CSH_opt /1   -  H3CSHb2_24   /1                                      -18.50
+ 2.5  +   H3CSH_opt /1   -  H3CSHb2_34   /1                                      -24.80
+ 5.0  +   H3CSH_opt /1   -  H3CSHb2_54   /1                                      -37.50
+ 5.0  +   H3CSH_opt /1   -  H3CSHb2_74   /1                                      -49.30
+ 7.5  +   H3CSH_opt /1   -  H3CSHb2_94   /1                                      -59.90
+10.5  +   H3CSH_opt /1   -  H3CSHb3_24   /1                                      -73.10
+ 0.5  +   H3CSH_opt /1   -  H3CSHb3_54   /1                                      -75.80
+# Restraint S-H_bond dissociation in H3CS-H
+25.0  +   H3CSH_opt /1   -  SHb0_95   /1                                      -105.20
+ 2.5  +   H3CSH_opt /1   -  SHb1_15   /1                                       -17.40
+ 0.5  +   H3CSH_opt /1   -  SHb1_25   /1                                        -3.60
+ 0.5  +   H3CSH_opt /1   -  SHb1_35   /1                                        -0.01
+ 0.5  +   H3CSH_opt /1   -  SHb1_45   /1                                        -2.40
+ 1.5  +   H3CSH_opt /1   -  SHb1_55   /1                                        -8.50
+ 2.5  +   H3CSH_opt /1   -  SHb1_65   /1                                       -16.40
+ 5.0  +   H3CSH_opt /1   -  SHb1_85   /1                                       -34.30
+ 5.0  +   H3CSH_opt /1   -  SHb2_05   /1                                       -51.60
+ 5.0  +   H3CSH_opt /1   -  SHb2_25   /1                                       -67.10
+10.0  +   H3CSH_opt /1   -  SHb2_55   /1                                       -86.40
+ 0.5  +   H3CSH_opt /1   -  SHb3_05   /1                                       -88.10
+# Restraint S-S_bond dissociation in HS-SH
+25.0  +   HSSH_opt /1   -  HSSHb1_55   /1                                      -156.60
+ 5.0  +   HSSH_opt /1   -  HSSHb1_75   /1                                       -47.60
+ 2.5  +   HSSH_opt /1   -  HSSHb1_95   /1                                        -8.30
+ 2.5  +   HSSH_opt /1   -  HSSHb2_05   /1                                        -1.70
+ 2.5  +   HSSH_opt /1   -  HSSHb2_15   /1                                        -0.01
+ 2.5  +   HSSH_opt /1   -  HSSHb2_25   /1                                        -1.40
+ 2.5  +   HSSH_opt /1   -  HSSHb2_35   /1                                        -4.80
+ 2.5  +   HSSH_opt /1   -  HSSHb2_45   /1                                        -9.60
+ 5.0  +   HSSH_opt /1   -  HSSHb2_65   /1                                       -20.20
+ 5.0  +   HSSH_opt /1   -  HSSHb2_85   /1                                       -31.20
+10.0  +   HSSH_opt /1   -  HSSHb3_15   /1                                       -46.40
+10.0  +   HSSH_opt /1   -  HSSHb3_45   /1                                       -58.70
+20.0  +   HSSH_opt /1   -  HSSHb3_85   /1                                       -70.70
+ 0.25  +   HSSH_opt /1   -  HSSHb4_25   /1                                       -62.90
+# Restraint C-S-C_angle distortion in H3C-S-CH3
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a68   /1                                   -34.60
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a84   /1                                    -5.70
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a92   /1                                    -1.10
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a96   /1                                    -0.20
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a98   /1                                    -0.02
+ 0.5  +   H3CSCH3_opt /1   -  H3CSCH3a99   /1                                    -0.001
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a100  /1                                    -0.02 
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a102  /1                                    -0.20 
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a106  /1                                    -0.90 
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a114  /1                                    -4.00 
+ 1.0  +   H3CSCH3_opt /1   -  H3CSCH3a130  /1                                   -15.00 
+# General C-S-H_angle distortion in H3C-S-H
+ 5.0  +   H3CSH_opt /1   -  H3CSHa66   /1                                       -17.80
+ 2.5  +   H3CSH_opt /1   -  H3CSHa82   /1                                        -4.10
+ 2.0  +   H3CSH_opt /1   -  H3CSHa90   /1                                        -0.90
+ 1.5  +   H3CSH_opt /1   -  H3CSHa94   /1                                        -0.20
+ 1.5  +   H3CSH_opt /1   -  H3CSHa96   /1                                        -0.02
+ 0.5  +   H3CSH_opt /1   -  H3CSHa97   /1                                        -0.001
+ 1.5  +   H3CSH_opt /1   -  H3CSHa98   /1                                        -0.02 
+ 1.5  +   H3CSH_opt /1   -  H3CSHa100  /1                                        -0.20 
+ 1.5  +   H3CSH_opt /1   -  H3CSHa104  /1                                        -0.90 
+ 1.5  +   H3CSH_opt /1   -  H3CSHa112  /1                                        -3.80 
+ 1.5  +   H3CSH_opt /1   -  H3CSHa128  /1                                       -16.50 
+# Restraint H-S-H_angle distortion in H-S-H
+ 5.0  +   H2S_opt /1   -  HSHa62   /1                                           -16.50
+ 2.5  +   H2S_opt /1   -  HSHa78   /1                                            -3.90
+ 2.0  +   H2S_opt /1   -  HSHa86   /1                                            -0.80
+ 1.5  +   H2S_opt /1   -  HSHa90   /1                                            -0.10
+ 1.5  +   H2S_opt /1   -  HSHa92   /1                                            -0.01
+ 1.5  +   H2S_opt /1   -  HSHa93   /1                                            -0.001
+ 1.5  +   H2S_opt /1   -  HSHa94   /1                                            -0.02
+ 1.5  +   H2S_opt /1   -  HSHa96   /1                                            -0.20
+ 2.0  +   H2S_opt /1   -  HSHa100  /1                                            -0.90
+ 2.5  +   H2S_opt /1   -  HSHa108  /1                                            -3.80
+ 5.0  +   H2S_opt /1   -  HSHa124  /1                                           -15.40
+# Restraint C-S-C-C_torsion barrier in H3C-S-CH2-CH3
+ 0.5  +   H3CSCH2CH3t180 /1   -  H3CSCH2CH3t150   /1                             -0.81
+ 0.5  +   H3CSCH2CH3t180 /1   -  H3CSCH2CH3t120   /1                             -1.64
+ 0.5  +   H3CSCH2CH3t180 /1   -  H3CSCH2CH3t90    /1                             -0.59
+ 0.5  +   H3CSCH2CH3t180 /1   -  H3CSCH2CH3t60    /1                             -0.22
+ 0.5  +   H3CSCH2CH3t180 /1   -  H3CSCH2CH3t30    /1                             -2.15
+ 0.5  +   H3CSCH2CH3t180 /1   -  H3CSCH2CH3t0     /1                             -3.76
+# Restraint C-S-S-C_torsion barrier in H3C-S-S-CH3
+50.5  +   H3CSSCH3t90 /1   -  H3CSSCH3t180  /1                                   -5.68
+50.5  +   H3CSSCH3t90 /1   -  H3CSSCH3t150  /1                                   -4.67
+50.5  +   H3CSSCH3t90 /1   -  H3CSSCH3t120  /1                                   -1.97
+50.5  +   H3CSSCH3t90 /1   -  H3CSSCH3t60   /1                                   -1.85
+50.5  +   H3CSSCH3t90 /1   -  H3CSSCH3t30   /1                                   -7.12
+50.5  +   H3CSSCH3t90 /1   -  H3CSSCH3t0    /1                                  -10.52
+# Restraint H-S-S-H_torsion barrier in H-S-S-H
+50.5  +   HSSHt90 /1   -  HSSHt180  /1                                           -5.34
+50.5  +   HSSHt90 /1   -  HSSHt150  /1                                           -4.20
+50.5  +   HSSHt90 /1   -  HSSHt120  /1                                           -1.52
+50.5  +   HSSHt90 /1   -  HSSHt60   /1                                           -1.97
+50.5  +   HSSHt90 /1   -  HSSHt30   /1                                           -5.94
+50.5  +   HSSHt90 /1   -  HSSHt0    /1                                           -7.98
+# Restraint C-H to S-H bond transfer in CH3CH2S
+0.5  +   CH3CH2S_opt /1 - CH3CH2S_1_97 /1                                       -7.18
+0.5  +   CH3CH2S_opt /1 - CH3CH2S_1_58 /1                                      -27.75
+0.5  +   CH3CH2S_opt /1 - CH3CH2S_ts /1                                        -38.24
+0.5  +   CH3CH2S_opt /1 - CH3CH2S_1_35 /1                                      -34.65
+0.5  +   CH3CH2S_opt /1 - CH3CH2S_1_31 /1                                      -20.99
+0.5  +   CH3CH2S_opt /1 - CH3CHSH_opt /1                                       -10.69
+# Restraint S radical insertion in C6H5S
+0.5  +   C6H5S_opt /1 - C6H5S_2_46 /1                                           -9.42
+0.5  +   C6H5S_opt /1 - C6H5S_2_16 /1                                          -36.47
+0.5  +   C6H5S_opt /1 - C6H5S_epox /1                                          -55.38
+0.5  +   C6H5S_opt /1 - C6H5S_cc1_76 /1                                        -66.09
+0.5  +   C6H5S_opt /1 - C6H5S_cc2_06 /1                                        -76.00
+0.5  +   C6H5S_opt /1 - C6H5S_cc2_36 /1                                        -69.93
+0.5  +   C6H5S_opt /1 - C6H5S_cc_opt /1                                        -64.73  
+# Restraint CH4+SH to CH3+H2S
+0.5  +   CH3HSH_opt /1 - H2S_opt /1 - CH3_opt /1                                -5.95
+0.5  +   CH3HSH_opt /1 - CH3HSH_ts /1                                           -1.68
+0.5  +   CH3HSH_opt /1 - CH4SH_opt /1                                           18.00
+# General sulfur_compounds hydrogenation
+ 0.5  +   epoxideiso_opt/1 - epoxide_opt/1                                       -3.45
+ 0.5  +   thiophenol_opt/1 - thioanion_opt/1 - H2_opt/2                         -24.34
+ 0.5  +   benzene_opt/1 + H2S1_opt/1 - thiophenol_opt/1 - H2_opt/1              -18.86
+ 0.5  +   dmthydrocis_opt/1 - dmt_opt/1 - H2_opt/1                               -0.66
+ 0.5  +   dmthydrotrans_opt/1 - dmt_opt/1 - H2_opt/1                             -4.35
+ 0.5  +   dmthydro2cis_opt/1 + H2S1_opt/1 - dmt_opt/1 - 2H2_opt/1               -17.20
+ 0.5  +   dmth2trans_opt/1 + H2S1_opt/1 - dmt_opt/1 - 2H2_opt/1                 -20.81
+ 0.5  +   dbthydro_opt/1 - dbt_opt/1 - H2_opt/1                                  -5.93
+ 0.5  +   dbthydro2_opt/1 + H2S1_opt/1 - dbt_opt/1 -  2H2_opt/1                  -26.32
+ 0.5  +   bthydro_opt/1 - bt_opt/1 - H2_opt/1                                    -5.70
+ 0.5  +   bthydro2_opt/1 + H2S1_opt/1 - bt_opt/1 - 2H2_opt/1                    -22.98
+ 0.5  +   dpshydro_opt/1 - dps_opt/1 - H2_opt/1                                 -17.69
+ 0.5  +   dpshydro2_opt/1 + H2S1_opt/1 - dps_opt/1 - 2H2_opt/1                  -35.52
+ 0.5  +   dbshp1_opt/1 + dbshp2_opt/1 - dbs_opt/1 - H2_opt/1                    -18.97
+ 0.5  +   dbshydro2_opt/1 + H2S1_opt/1 - dbs_opt/1 - 2H2_opt/1                  -38.16
+ 2.5  +   SC4H5_2 /1 - H2_opt/2 - SC4H4_m /1                                     15.98
+ 2.5  +   SC4H6_5 /1 - H2_opt/1 - SC4H4_m /1                                    -13.95
+ 2.5  +   SC4H7_3 /1 - H2_opt/1 - H2_opt/2 - SC4H4_m /1                           1.77
+ 2.5  +   SC4H8_4 /1 - 2H2_opt/1 - SC4H4_m /1                                   -44.62
+ 2.5  +   SC5H9_7 /1 + H2_opt/2 - SC5H10 /1                                      43.61
+ 2.5  +   SC5H8_9 /1 + H2_opt/1 - SC5H10 /1                                      31.96
+ 2.5  +   SC5H7_16 /1 + H2_opt/1 + H2_opt/2 - SC5H10 /1                          75.09
+ 2.5  +   SC5H6_14 /1 + H2_opt/1 + H2_opt/1 - SC5H10 /1                          64.77
+ 1.0  +   SC4H10_opt /1 - SC2H6_C2H4_opt /1                                      99.29
+ 0.5  +   C2H2S2_opt /1 - C2H2S2_iso_opt /1                                      18.87
+25.0  +   S4_tetra_opt /1 - S2_opt /1 - S2_opt /1                               -32.73
+25.0  +   S3_opt /1 - S3_chain_opt /1                                             8.34
+ 1.0  +   C6H6S_opt /1 - benzene_opt /1 - S2_opt /2                             114.77
+ 1.5  +   C6H6S_B3_13 /1 - C6H6S_B2_78 /1                                       -12.26
+ 1.5  +   C6H6S_B3_13 /1 - C6H6S_B2_43 /1                                       -38.52
+ 1.5  +   C6H6S_B3_13 /1 - C6H6S_B2_08 /1                                       -54.51
+25.0  +   C6H6S_B3_13 /1 - C6H6S_B1_73 /1                                       -73.69
+250.0  +   C6H6S_B3_13 /1 - C6H6S_B1_38 /1                                     -178.34
+225.0  +  C6S_linear_opt /1 - C6S_ring_opt /1                                   -441.47
+25.0  +   S5_opt /1 - S2_opt /1 - S2_opt /1 - S2_opt /2                         -75.76
+ 1.0  +   H3CSSCH3 /1 - H3CSSCH3_diss/1                                         -48.30
+# Restraint S-S_bond dissociation in S=S
+ 2.5  +   S2_opt /1 - S2_1_63 /1                                                -48.29
+ 0.5  +   S2_opt /1 - S2_1_83 /1                                                 -3.64
+ 0.5  +   S2_opt /1 - S2_opt /1                                                   0.01
+ 2.5  +   S2_opt /1 - S2_2_03 /1                                                 -2.77
+ 7.5  +   S2_opt /1 - S2_2_23 /1                                                -18.22
+ 7.5  +   S2_opt /1 - S2_2_43 /1                                                -38.65
+ 0.5  +   S2_opt /1 - S2_5_93 /1                                               -112.93
+ENDENERGY
