@@ -1,0 +1,7 @@
+r.xyz and p_v1.xyz used for orginal NEB
+
+p_v2.xyz taken from a local minimum in first NEB
+
+NEB repeated with r.xyz and p_v2.xyz
+
+Input for NEB is made by running make_lammps_atoms.py to make r.txt and p.txt

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for i in {1..32}; do tail -21 dump.neb.${i} > final-${i}; done
+
+python make_xyz.py

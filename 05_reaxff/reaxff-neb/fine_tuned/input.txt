@@ -1,0 +1,30 @@
+units           real
+dimension       3
+boundary        f f f
+atom_style      full
+atom_modify     map array sort 0 0.0
+
+read_data       r.txt
+
+pair_style      reaxff NULL safezone 3.0 mincap 150
+pair_coeff      * * ffield C H N O S 
+neighbor        2 bin
+neigh_modify    every 10 delay 0 check no
+
+fix 1 all qeq/reaxff 1 0.0 10.0 1.0e-6 reaxff
+#dump all custom 100 dump.lammpstrj id type q x y z
+#minimize 1.0e-4 1.0e-6 100 1000
+#compute 1 all pe
+
+variable j uloop 32
+dump 1 all custom 1000 dump.neb.$j id type x y z
+
+
+min_style       fire
+fix 2 all neb 5.0 parallel neigh
+
+variable i equal part
+#neb 0.0 0.05 400000 0 100 each coords.initial.$i
+neb 0.0 0.05 400000 0 100 final p.txt
+
+#write_data p_opt.data
