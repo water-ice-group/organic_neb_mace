@@ -1,5 +1,8 @@
 #!/bin/bash
 
-for i in {1..30}; do tail -21 dump.neb.${i} > final-${i}; done
+num_images=30
+num_atoms=21
+
+for i in {1..${num_images}}; do tail -${num_atoms} dump.neb.${i} > final-${i}; done
 
 python make_xyz.py

@@ -1,11 +1,12 @@
 # Scripts and data for "Finding reaction pathways efficiently using reaction databases and active learning".
 
 # Table of Contents
-1. [Iterative training](#example)
-2. [Model for finding SN2 reaction NEBs](#example2)
-3. [Active learning on ethyl chloride + fluoride ion](#third-example)
-4. [Active learning on ethyl chloride + fluoride ion + 4 H_2O](#fourth-example)
-5. [Figures](#figures)
+1. [Iterative training](#iterative-training)
+2. [Model for finding SN2 reaction NEBs](#model-for-finding-sn2-reaction-nebs)
+3. [Active learning on ethyl chloride and fluoride ion SN2](#active-learning-on-ethyl-chloride-and-fluoride-ion-sn2)
+4. [Active learning on microsolvated ethyl chloride and fluoride ion SN2](#active-learning-on-microsolvated-ethyl-chloride-and-fluoride-ion-sn2)
+5. [Aromatic substitution with AL and ReaxFF](#aromatic-substitution-with-al-and-reaxff)
+6. [Figures](#figures)
 
 
 ## Iterative training
@@ -24,7 +25,7 @@ Use the `make_sets.py` script to randomly select reactions for the train, test a
 
 For the rattled training sets, we need to make R, P, TS configurations with added random atomic displacements using the `rattle.py` script and recalculate their MP2 energies and forces using `orca_eval.py`
 
-## Active learning on ethyl chloride + fluoride ion
+## Active learning on ethyl chloride and fluoride ion SN2
 
 The reactant and product configurations are stored in `r.xyz` and `p.xyz`, respectively.
 
@@ -32,13 +33,17 @@ Use the `make_sets.py` script to make rattled configurations of the reactants an
 
 To run the active learning, use `train.sh` which contains example input arguments for the `train.py` script
 
-## Active learning on ethyl chloride + fluoride ion + 4 H<sub>2</sub>O
+## Active learning on microsolvated ethyl chloride and fluoride ion SN2
 
 The reactant and product configurations are stored in `r.xyz` and `p.xyz`, respectively.
 
 Use the `make_sets.py` script to make rattled configurations of the reactants and products, calculate their MP2 energies and forces, and make train, valid, test sets. `train.sh` has the example inputs for `train.py` to generate the sets.
 
 To run the active learning, use `train.sh` which contains example input arguments for the `train.py` script
+
+## Aromatic substitution with AL and ReaxFF
+
+In addition to active learning scripts, we provide the ReaxFF force field parameters used "ffield.reax.hcnos", the ReaxFF retraining code, and input files for running the ReaxFF NEB
 
 ## Figures
 
