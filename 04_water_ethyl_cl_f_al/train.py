@@ -4,6 +4,7 @@ from ase.optimize import FIRE
 import glob
 from mace.calculators.mace import MACECalculator
 from ase.io import read, write
+from ase.neighborlist import NeighborList, natural_cutoffs, get_connectivity_matrix
 from orca_eval import single_point
 import ase
 import os
@@ -11,39 +12,70 @@ import subprocess
 import time
 import re
 import argparse
+import logging
+
+
+logger = logging.getLogger(__name__)
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--reactants_fname", help="name of training set file", default="r.xyz")
     parser.add_argument("--products_fname", help="name of training set file", default="p.xyz")
-    parser.add_argument("--mace_dir", help="path top MACE installation", required=True)
-    parser.add_argument("--orca_path", help="path top ORCA binary", required=True)
-    parser.add_argument("--num_models", help="number of models in committee (minimum 2)", type=int, default=2)
-    parser.add_argument("--num_new_configs", help="max number of configurations added to the training set per iteration", type=int, default=1)
-    parser.add_argument("--neb_steps", help="number of NEB steps", type=int, default=200)
-    parser.add_argument("--n_images", help="number of NEB images", type=int, default=20)
-    parser.add_argument("--k", help="NEB spring constant", type=float, default=0.02)
-    parser.add_argument("--neb_fmax", help="NEB force stopping criterion", type=float, default=0.05)
-    parser.add_argument("--qm_fmax", help="Configurations exceeding QC force cutoff (in eV / A) are not included in the training set", type=float, default=10)
-    parser.add_argument("--max_n_iterations", help="maximum number of active learning iterations", type=int, default=20)
+    parser.add_argument("--train_num_rattle", type=int, default=20)
+    parser.add_argument("--valid_num_rattle", type=int, default=20)
+    parser.add_argument("--test_num_rattle", type=int, default=20)
+    parser.add_argument("--rattle_stdev", type=int, default=0.02)
     parser.add_argument("--charge", help="charge of the system", type=int, default=0)
     parser.add_argument("--mult", help="spin multiplicity of the system", type=int, default=1)
+    parser.add_argument("--orca_path", help="path top ORCA binary", required=True)
+    parser.add_argument("--mace_dir", help="path top MACE installation", required=True)
+    parser.add_argument("--num_models", help="number of models in committee (minimum 2)", type=int, default=2)
+    parser.add_argument("--delta_threshold", help="model energy disagreement threshold for selection of new data (eV/A)", type=int, default=0.0005)
+    parser.add_argument("--num_new_configs", help="max number of configurations added to the training set per iteration", type=int, default=1)
+    parser.add_argument("--neb_steps", help="max number of NEB steps", type=int, default=250)
+    parser.add_argument("--num_images", help="number of NEB images", type=int, default=20)
+    parser.add_argument("--k", help="NEB spring constant", type=float, default=0.2)
+    parser.add_argument("--neb_fmax", help="NEB force stopping criterion", type=float, default=0.05)
+    parser.add_argument("--qm_fmax", help="Don't accept configurations with force QM force error exceeding this value", type=float, default=10)
+    parser.add_argument("--max_n_iterations", help="maximum number of active learning iterations", type=int, default=30)
+    parser.add_argument("--extra_neb_steps", action="store_true")
+    parser.add_argument("--use_climbing_image", help="Use climbing image NEB after simple NEB", action="store_true")
+    parser.add_argument("--use_idpp", help="Use image-dependent pair potential for NEB", action="store_true")
+    parser.add_argument("--neb_method", help="which neb method to use: aseneb, improvedtangent", default='aseneb')
+    parser.add_argument("--num_channels", help="Number of MACE embedding channels", type=int, default=128)
     return parser.parse_args()
 
 
-def committee_error(dyn):
+def atoms_overlap(atoms):
+    cutoffs = natural_cutoffs(atoms, mult=0.6)
+    nl = NeighborList(cutoffs, self_interaction=False, skin=0)
+    nl.update(atoms)
+    return np.any(nl.get_connectivity_matrix(sparse=False))
+
+
+def committee_disagreement(dyn, threshold, neb_steps=250):
+    if dyn.nsteps < neb_steps:
+        return 0
     images = dyn.atoms.images[1:-1]
-    errors = []
-    errors = [np.sqrt(image.calc.results["energy_var"]) for image in images]
-    dyn.atoms.errors = np.array(errors)
+    global_threshold = threshold * len(images[0])
+    disagreements = np.array([np.sqrt(image.calc.results["energy_var"]) for image in images])
+    logger.info(f'Max disagreement: {np.max(disagreements)}, disagreements: {disagreements}')
+    logger.info(f'Number of possible new data: {np.sum((disagreements > global_threshold) & ~np.array([atoms_overlap(at) for at in images]))}')
+    if np.any((disagreements > global_threshold) & ~np.array([atoms_overlap(at) for at in images])):
+        dyn.nsteps = dyn.max_steps
+
 
 """
     Selection function that combines mace energy and mace disagreement
     Takes dyn, returns selected images with ref energies and forces
 """
 
-def energy_disagreemenent_selection(dyn, n_select, threshold, orca_path, charge, mult):
-    images = [image for disagreement, image in zip(dyn.atoms.errors, dyn.atoms.images[1:-1]) if disagreement > threshold*image.get_global_number_of_atoms()]
+
+def energy_disagreemenent_selection(dyn, n_select, threshold, orca_path, charge, mult, qm_fmax):
+    intermed_images = dyn.atoms.images[1:-1]
+    disagreements = np.array([np.sqrt(image.calc.results["energy_var"]) for image in intermed_images])
+    images = [image for disagreement, image in zip(disagreements, intermed_images) if disagreement > threshold*len(image)]
     e_score = np.array([np.sqrt(image.calc.results["energy_var"]) for image in images])
     e_score_sorted = np.flip(np.sort(e_score))
     """ List containing indices of images in the order of priority """
@@ -53,12 +85,21 @@ def energy_disagreemenent_selection(dyn, n_select, threshold, orca_path, charge,
         if len(selected_images) == n_select:
             break
         image = images[index]
-        image = single_point(orca_path=orca_path, config=image, charge=charge, mult=mult)
-        if np.any(np.linalg.norm(image.arrays["mp2_forces"], axis=1) <= 10):
-            selected_images.append(image)
+        
+        if not atoms_overlap(image):
+            image = single_point(orca_path=orca_path, config=image, charge=charge, mult=mult)
         else:
             continue
+
+        if np.all(np.linalg.norm(image.arrays["mp2_forces"], axis=1) <= qm_fmax):
+            logger.info('Selected image')
+            selected_images.append(image)
+        else:
+            logger.info('QM forces too high - going to next image')
+            continue
+
     return selected_images
+
 
 def wait_for_output(fnames, sleep_int=10):
     while True:
@@ -66,96 +107,131 @@ def wait_for_output(fnames, sleep_int=10):
             break
         time.sleep(sleep_int)
 
-def initialize_neb(reac, prod, nimages=10, k=0.1):
+
+def initialize_neb(reac, prod, nimages=10, k=0.1, neb_method="aseneb", use_idpp=False):
     images = ([reac] 
             + [reac.copy() for i in range(nimages-2)] 
             + [prod])
-    neb = NEB(images=images, k=k, climb=False, remove_rotation_and_translation=True, parallel=True)
-    neb.interpolate()
+    neb = NEB(images=images, k=k, remove_rotation_and_translation=True, method=neb_method)
+    if use_idpp:
+        neb.interpolate('idpp')
+    else:
+        neb.interpolate()
     return neb
 
 
+def write_neb(dyn):
+    for im in dyn.atoms.images:
+        if 'energies' in im.calc.results:
+            del im.calc.results['energies']
+        if 'forces_comm' in im.calc.results:
+            del im.calc.results['forces_comm']
+    write('neb.xyz', dyn.atoms.images)
+
+
 def main():
+    logging.basicConfig(filename='al.log', level=logging.INFO)
+    logger.info('Started')
+    
     args = parse_args()
     
     reac = read(args.reactants_fname)
     prod = read(args.products_fname)
     mace_dir = args.mace_dir
     orca_path = args.orca_path
-    n_comm = args.num_models
+    num_models = args.num_models
     n_select = args.num_new_configs
     neb_steps = args.neb_steps
-    n_images = args.n_images
+    num_images = args.num_images
     k = args.k
     neb_fmax = args.neb_fmax
     qm_fmax = args.qm_fmax
     max_n_iterations = args.max_n_iterations
     charge = args.charge
     mult = args.mult
-    model = "MACE_*_swa.model"
+    model = "MACE_*_stagetwo.model"
 
-    
+    logger.info(f'Using {num_images} images in NEB')
+    logger.info(f'Using spring constant of {k}')
+    logger.info(f'Using stopping force threshold of {neb_fmax} eV / A and maximum of {neb_steps} steps')
+    logger.info(f'Using maximum true force of {qm_fmax} for accepting new configs')
+    logger.info(f'Taking maximum of {n_select} new configurations per iteration')
 
     for iter in range(max_n_iterations):
         if os.path.exists(f"iter{iter}"):
-            print(f"Iteration {iter} aklready done. Skipping to next iteration.")
+            logger.info(f"Iteration {iter} already done. Skipping to next iteration.")
             continue
         commands = []
-        for s in range(1, n_comm+1):
-            if os.path.exists(f"MACE_{s}_swa.model"):
-                print(f"{s}th model already trained for current iteration. Skipping to next seed.")
+        for s in range(1, num_models+1):
+            if os.path.exists(f"MACE_{s}_stagetwo.model"):
+                logger.info(f"{s}th model already trained for current iteration. Skipping to next seed.")
                 continue
-            seed = iter * n_comm + s
+            seed = iter * num_models + s
             commands.append([
-                "python", f"{mace_dir}/mace/cli/run_train.py",
+                "python", f"{mace_dir}/cli/run_train.py",
                 f"--name=MACE_{s}", "--train_file=train.xyz", 
                 "--valid_file=valid.xyz", "--test_file=test.xyz",
-                "--model=MACE", "--loss=weighted",
+                "--model=MACE", "--loss=weighted", 
+                f"--hidden_irreps={args.num_channels}x0e + {args.num_channels}x1o",
                 "--batch_size=5", "--swa", "--ema",
-                "--max_num_epochs=1000", "--start_swa=500",
+                "--max_num_epochs=400", "--start_swa=200",
                 "--ema_decay=0.99", "--amsgrad",
                 "--restart_latest", "--device=cuda", 
                 "--save_cpu", f"--seed={seed}",
                 "--forces_key=mp2_forces", "--energy_key=mp2_energy",
                 "--default_dtype=float64"])
         if len(commands) == 0:
-            print("All models available, continuing to NEB")
+            logger.info("All models available, continuing to NEB")
         else:
             processes = [subprocess.Popen(command) for command in commands]
             for process in processes:
                 process.wait()
-        wait_for_output([f"MACE_{s}_swa.model" for s in range(1, n_comm+1)])
-        print("Do neb")
+        wait_for_output([f"MACE_{s}_stagetwo.model" for s in range(1, num_models+1)])
+        logger.info('Doing NEB with MACE models to get new training data')
+ 
         if not os.path.exists("neb.xyz"):
-            neb = initialize_neb(reac=reac, prod=prod, nimages=n_images, k=k)
+            neb = initialize_neb(reac=reac, prod=prod, nimages=num_images, k=k, neb_method=args.neb_method, use_idpp=args.use_idpp)
         else:
-            neb = NEB(images=read("neb.xyz", ":"), k=k)
+            neb = NEB(images=read("neb.xyz", ":"), k=k, method='improvedtangent', remove_rotation_and_translation=True)
     
         # Set calculators:
-        for image in neb.images[1:-1]:
+        for image in neb.images:
             image.calc = MACECalculator(model_paths=model, default_dtype="float64", device="cuda")
-        # Optimize:
+        # Run neb for neb_steps initial steps:
         dyn = FIRE(neb)
-        dyn.attach(committee_error, interval=1, dyn=dyn)
-        """ Run NEB """
-        dyn.run(fmax=neb_fmax, steps=neb_steps)
-        write("neb.xyz", dyn.atoms.images)
+        dyn.run(fmax=neb_fmax, steps=args.neb_steps)
+        dyn.attach(write_neb, interval=1, dyn=dyn)
+
+        if args.extra_neb_steps:
+            dyn.attach(committee_disagreement, interval=1, dyn=dyn, threshold=0.0005, neb_steps=args.neb_steps)
+            dyn.run(fmax=neb_fmax, steps=neb_steps)
+        
+        if args.use_climb:
+            dyn.atoms.climb = True
+            dyn.run(fmax=neb_fmax, steps=dyn.nsteps + args.neb_steps)
+
         """ Select new config """
-        selected_images = energy_disagreemenent_selection(dyn=dyn, n_select=n_select, threshold=0.0005)
+        selected_images = energy_disagreemenent_selection(dyn=dyn, n_select=n_select, threshold=0.0005, orca_path=orca_path, charge=charge, mult=mult, qm_fmax=qm_fmax)
+        logger.info(f"number of selected configs {len(selected_images)}")
 
         """ Create new directory for model, neb.xyz and copy of train and valid """
         os.system(f"mkdir iter{iter}")
+        os.system("rm MACE*compiled.model")
         os.system(f"mv neb.xyz MACE* logs iter{iter}")
         os.system(f"cp train.xyz iter{iter}")
         os.system("rm -r results checkpoints")
-        print(f"number of selected configs {len(selected_images)}")
+        
 
         if len(selected_images) > 0:
+            for im in selected_images:
+                if 'energies' in im.calc.results.keys():
+                    del im.calc.results['energies']
             write("train.xyz", selected_images, append=True)
     
         else:
-            print("No new configuration selected. AL has converged.")
+            logger.info("No new configuration selected. AL has converged.")
             break
+
 
 if __name__ == "__main__":
     main()
