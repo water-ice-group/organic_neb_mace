@@ -23,7 +23,7 @@ def get_calc(orca_path, charge=0, mult=1):
     )
     return calc
 
-def single_point(orca_path, config, charge, mult, prefix="mp2_"):
+def single_point(orca_path, config, charge, mult, prefix="REF_"):
     calc = get_calc(orca_path, charge, mult)
     calc.calculate(atoms=config, properties={"energy", "forces"}, system_changes=None)
     os.system("rm orca_property.txt orca.*")

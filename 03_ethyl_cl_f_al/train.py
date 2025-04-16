@@ -1,16 +1,13 @@
 import numpy as np
-from ase.mep.neb import NEB, NEBOptimizer
+from ase.mep.neb import NEB
 from ase.optimize import FIRE
-import glob
 from mace.calculators.mace import MACECalculator
 from ase.io import read, write
 from ase.neighborlist import NeighborList, natural_cutoffs, get_connectivity_matrix
 from orca_eval import single_point
-import ase
 import os
 import subprocess
 import time
-import re
 import argparse
 import logging
 
@@ -44,6 +41,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--use_idpp", help="Use image-dependent pair potential for NEB", action="store_true")
     parser.add_argument("--neb_method", help="which neb method to use: aseneb, improvedtangent", default='aseneb')
     parser.add_argument("--num_channels", help="Number of MACE embedding channels", type=int, default=128)
+    parser.add_argument("--E0s", help="String containing E0s", required=True)
     return parser.parse_args()
 
 
@@ -52,6 +50,21 @@ def atoms_overlap(atoms):
     nl = NeighborList(cutoffs, self_interaction=False, skin=0)
     nl.update(atoms)
     return np.any(nl.get_connectivity_matrix(sparse=False))
+
+
+def initialize_set(fname, r_atoms, p_atoms, indices, stdev=0.02, **kwargs):
+    atoms_list = []
+    for i in indices:
+        atoms = r_atoms.copy()
+        atoms.rattle(stdev=stdev, seed=2*i)
+        atoms = single_point(config=atoms, **kwargs)
+        atoms_list.append(atoms)
+
+        atoms = p_atoms.copy()
+        atoms.rattle(stdev=stdev, seed=2*i+1)
+        atoms = single_point(config=atoms, **kwargs)
+        atoms_list.append(atoms)
+    write(fname, atoms_list)
 
 
 def committee_disagreement(dyn, threshold, neb_steps=250):
@@ -157,6 +170,38 @@ def main():
     logger.info(f'Using maximum true force of {qm_fmax} for accepting new configs')
     logger.info(f'Taking maximum of {n_select} new configurations per iteration')
 
+    # Check for train, valid, test sets. If not present, build them
+    train_file_exists = os.path.exists('train.xyz')
+    valid_file_exists = os.path.exists('valid.xyz')
+    test_file_exists = os.path.exists('test.xyz')
+
+    if train_file_exists:
+        logger.info('Found training file train.xyz')
+    else:
+        logger.info(f'Training file not found. Creating using {args.train_num_rattle} rattled reactant and product configs.')
+        indices = np.arange(args.train_num_rattle)
+        initialize_set('train.xyz', reac, prod, indices, 
+            stdev=args.rattle_stdev, orca_path=orca_path, charge=charge, mult=mult
+        )
+    
+    if valid_file_exists:
+        logger.info('Found validation file valid.xyz')
+    else:
+        logger.info(f'Validation file not found. Creating using {args.valid_num_rattle} rattled reactant and product configs.')
+        indices = np.arange(args.train_num_rattle, args.train_num_rattle+args.valid_num_rattle)
+        initialize_set('valid.xyz', reac, prod, indices, 
+            stdev=args.rattle_stdev, orca_path=orca_path, charge=charge, mult=mult
+        )
+    
+    if test_file_exists:
+        logger.info('Found test file test.xyz')
+    else:
+        logger.info(f'Test file not found. Creating using {args.test_num_rattle} rattled reactant and product configs.')
+        indices = np.arange(args.train_num_rattle+args.valid_num_rattle, args.train_num_rattle+args.valid_num_rattle+args.test_num_rattle)
+        initialize_set('test.xyz', reac, prod, indices, 
+            stdev=args.rattle_stdev, orca_path=orca_path, charge=charge, mult=mult
+        )
+
     for iter in range(max_n_iterations):
         if os.path.exists(f"iter{iter}"):
             logger.info(f"Iteration {iter} already done. Skipping to next iteration.")
@@ -171,14 +216,14 @@ def main():
                 "python", f"{mace_dir}/cli/run_train.py",
                 f"--name=MACE_{s}", "--train_file=train.xyz", 
                 "--valid_file=valid.xyz", "--test_file=test.xyz",
-                "--model=MACE", "--loss=weighted", 
+                "--model=MACE", "--loss=weighted", f"--E0s={args.E0s}",
                 f"--hidden_irreps={args.num_channels}x0e + {args.num_channels}x1o",
                 "--batch_size=5", "--swa", "--ema",
                 "--max_num_epochs=400", "--start_swa=200",
                 "--ema_decay=0.99", "--amsgrad",
                 "--restart_latest", "--device=cuda", 
                 "--save_cpu", f"--seed={seed}",
-                "--forces_key=mp2_forces", "--energy_key=mp2_energy",
+                "--forces_key=REF_forces", "--energy_key=REF_energy",
                 "--default_dtype=float64"])
         if len(commands) == 0:
             logger.info("All models available, continuing to NEB")
