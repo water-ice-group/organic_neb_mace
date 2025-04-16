@@ -29,13 +29,13 @@ For the rattled training sets, we need to make R, P, TS configurations with adde
 
 The reactant and product configurations are stored in `r.xyz` and `p.xyz`, respectively.
 
-To run active learning (including initialization of training configs, run `train.py`. `train.sh` in the example directory gives example arguments).
+To run active learning (including initialization of training configs, run `train.py` in `scripts`. `train.sh` in the example directory gives example arguments).
 
 ## Active learning on microsolvated ethyl chloride and fluoride ion SN2
 
 The reactant and product configurations are stored in `r.xyz` and `p.xyz`, respectively.
 
-To run active learning (including initialization of training configs, run `train.py`. `train.sh` in the example directory gives example arguments).
+To run active learning (including initialization of training configs, run `train.py` in `scripts`. `train.sh` in the example directory gives example arguments).
 
 ## Aromatic substitution with AL and ReaxFF
 
