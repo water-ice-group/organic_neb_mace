@@ -29,17 +29,13 @@ For the rattled training sets, we need to make R, P, TS configurations with adde
 
 The reactant and product configurations are stored in `r.xyz` and `p.xyz`, respectively.
 
-Use the `make_sets.py` script to make rattled configurations of the reactants and products, calculate their MP2 energies and forces, and make train, valid, test sets. `train.sh` has the example inputs for `train.py` to generate the sets.
-
-To run the active learning, use `train.sh` which contains example input arguments for the `train.py` script
+To run active learning (including initialization of training configs, run `train.py`. `train.sh` in the example directory gives example arguments).
 
 ## Active learning on microsolvated ethyl chloride and fluoride ion SN2
 
 The reactant and product configurations are stored in `r.xyz` and `p.xyz`, respectively.
 
-Use the `make_sets.py` script to make rattled configurations of the reactants and products, calculate their MP2 energies and forces, and make train, valid, test sets. `train.sh` has the example inputs for `train.py` to generate the sets.
-
-To run the active learning, use `train.sh` which contains example input arguments for the `train.py` script
+To run active learning (including initialization of training configs, run `train.py`. `train.sh` in the example directory gives example arguments).
 
 ## Aromatic substitution with AL and ReaxFF
 

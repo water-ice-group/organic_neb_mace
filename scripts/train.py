@@ -40,7 +40,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--use_climbing_image", help="Use climbing image NEB after simple NEB", action="store_true")
     parser.add_argument("--use_idpp", help="Use image-dependent pair potential for NEB", action="store_true")
     parser.add_argument("--neb_method", help="which neb method to use: aseneb, improvedtangent", default='aseneb')
-    parser.add_argument("--num_channels", help="Number of MACE embedding channels", type=int, default=128)
+    parser.add_argument("--mace_hidden_irreps", help="Number of MACE embedding channels")
     parser.add_argument("--E0s", help="String containing E0s", required=True)
     return parser.parse_args()
 
@@ -217,7 +217,7 @@ def main():
                 f"--name=MACE_{s}", "--train_file=train.xyz", 
                 "--valid_file=valid.xyz", "--test_file=test.xyz",
                 "--model=MACE", "--loss=weighted", f"--E0s={args.E0s}",
-                f"--hidden_irreps={args.num_channels}x0e + {args.num_channels}x1o",
+                f"--hidden_irreps={args.mace_hidden_irreps}",
                 "--batch_size=5", "--swa", "--ema",
                 "--max_num_epochs=400", "--start_swa=200",
                 "--ema_decay=0.99", "--amsgrad",
